@@ -5,7 +5,7 @@ services:
     build: .
     image: node-app
     environment:
-      - MONGODB_URL=mongodb://mongodb:27017/node-boilerplate
+      - MONGODB_URL=mongodb+srv://quang01696103588:1qLAaozxxX4HmC7H@cluster0.u1vpk.mongodb.net/
     ports:
       - '3000:3000'
     depends_on:
@@ -14,7 +14,15 @@ services:
       - .:/usr/src/node-app
     networks:
       - node-network
-
+  nginx:
+    image: nginx
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - node-app
   mongodb:
     image: mongo:4.2.1-bionic
     ports:
